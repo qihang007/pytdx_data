@@ -22,20 +22,17 @@ try:
 except ImportError:
     pd = None
 
-try:
-    from pytdx.hq import TdxHq_API
-    from pytdx.params import TDXParams
-except ImportError:
-    print("请先安装 pytdx: pip install pytdx")
-    sys.exit(1)
+from pytdx.hq import TdxHq_API
+from pytdx.params import TDXParams
 
 
 # ─── 服务器列表 ───────────────────────────────────────────
 DEFAULT_HOSTS = [
-    ("119.147.212.81", 7709),
-    ("120.76.152.87", 7709),
-    ("124.71.187.72", 7709),
-    ("116.128.188.228", 7709),
+    ("119.147.212.81", 7709),   # 深圳
+    ("180.153.18.170", 7709),   # 上海
+    ("60.12.136.250", 7709),    # 北京
+    ("218.75.126.9", 7709),     # 杭州
+    ("115.238.56.198", 7709),   # 杭州2
 ]
 
 BLOCK_TYPES = {
@@ -47,13 +44,26 @@ BLOCK_TYPES = {
 
 
 def find_best_server():
-    """自动查找最优行情服务器"""
-    try:
-        from pytdx.util.best_ip import select_best_ip
-        info = select_best_ip()
-        return info["ip"], info["port"]
-    except Exception:
-        return DEFAULT_HOSTS[0]
+    """静默查找第一个可用的行情服务器"""
+    import io
+    for host, port in DEFAULT_HOSTS:
+        api = TdxHq_API()
+        try:
+            _bak = sys.stderr
+            sys.stderr = io.StringIO()
+            try:
+                if api.connect(host, port):
+                    # 验证能否真正获取数据
+                    data = api.get_security_list(0, 1)
+                    if data is not None and len(data) > 800:
+                        return host, port
+            finally:
+                sys.stderr = _bak
+        except Exception:
+            pass
+        finally:
+            api.disconnect()
+    return DEFAULT_HOSTS[0]
 
 
 def connect_api(ip=None, port=None, auto_best=True):
