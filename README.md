@@ -1,6 +1,6 @@
-# pytdx_data - Claude Code Skill
+# pytdx-data — 通达信行情数据 CLI 工具
 
-通达信行情数据接口技能，基于 [pytdx](https://github.com/rainx/pytdx) 封装常用操作，支持命令行调用和 Claude Code 技能集成。
+基于 [pytdx](https://github.com/rainx/pytdx) 封装的命令行工具，任意目录下直接调用。也可作为 Claude Code 技能使用。
 
 ## 功能
 
@@ -9,25 +9,29 @@
 - **扩展行情** - 期货、期权、外盘、港股
 - **本地数据** - 通达信 .day/.lc1/.lc5 文件解析
 - **板块数据** - 行业/概念/地区板块成分股
-- **自动选服** - `select_best_ip` 自动选择最优行情服务器
 
 ## 安装
 
 ```bash
-pip install pytdx pandas
+git clone https://github.com/qihang007/pytdx_data.git
+pip install ./pytdx_data
 ```
+
+一行即可，依赖 `pytdx` 和 `pandas` 会自动安装。
 
 ## CLI 使用
 
+安装后，任意目录下直接运行 `pytdx-data`：
+
 ```bash
-python scripts/pytdx_data.py quote 000001 600519        # 实时行情
-python scripts/pytdx_data.py kline 000001 --count 100    # K线数据
-python scripts/pytdx_data.py index-bars 000001           # 指数K线
-python scripts/pytdx_data.py best-ip                      # 查找最优服务器
-python scripts/pytdx_data.py read-daily "D:/path/to/sz000001.day"  # 读取日线
-python scripts/pytdx_data.py read-minline "D:/path/to/sz000001.lc5" # 读取分钟线
-python scripts/pytdx_data.py blocks --type GN             # 板块成分股
-python scripts/pytdx_data.py markets                      # 扩展行情市场列表
+pytdx-data quote 000001 600519              # 实时行情
+pytdx-data kline 000001 --count 100          # K线数据
+pytdx-data index-bars 000001                 # 指数K线
+pytdx-data best-ip                           # 查找最优服务器
+pytdx-data read-daily "D:/path/to/sz000001.day"   # 读取日线
+pytdx-data read-minline "D:/path/to/sz000001.lc5" # 读取分钟线
+pytdx-data blocks --type GN                  # 板块成分股（GN=行业,FG=概念,SZ=深圳）
+pytdx-data markets                           # 扩展行情市场列表
 ```
 
 ## 模块

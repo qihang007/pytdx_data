@@ -118,15 +118,17 @@ finally:
 
 ## CLI 工具
 
+安装后，任意目录下直接运行 `pytdx-data`：
+
 ```bash
-python scripts/pytdx_data.py quote 000001 600519        # 实时行情
-python scripts/pytdx_data.py kline 000001 --count 100    # K线数据
-python scripts/pytdx_data.py index-bars 000001           # 指数K线
-python scripts/pytdx_data.py best-ip                      # 查找最优服务器
-python scripts/pytdx_data.py read-daily "D:/path/to/sz000001.day"  # 读取日线
-python scripts/pytdx_data.py read-minline "D:/path/to/sz000001.lc5" # 读取分钟线
-python scripts/pytdx_data.py blocks --type GN             # 板块成分股
-python scripts/pytdx_data.py markets                      # 扩展行情市场列表
+pytdx-data quote 000001 600519              # 实时行情
+pytdx-data kline 000001 --count 100          # K线数据
+pytdx-data index-bars 000001                 # 指数K线
+pytdx-data best-ip                           # 查找最优服务器
+pytdx-data read-daily "D:/path/to/sz000001.day"   # 读取日线
+pytdx-data read-minline "D:/path/to/sz000001.lc5" # 读取分钟线
+pytdx-data blocks --type GN                  # 板块成分股
+pytdx-data markets                           # 扩展行情市场列表
 ```
 
 ## 注意事项

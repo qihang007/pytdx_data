@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "pytdx-data"
+version = "1.0.0"
+description = "通达信行情数据获取工具 - 基于 pytdx 封装的 CLI 工具"
+requires-python = ">=3.8"
+dependencies = ["pytdx", "pandas"]
+
+[project.scripts]
+pytdx-data = "pytdx_data:main"
+
+[tool.setuptools]
+py-modules = ["pytdx_data"]
